@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: overgeared
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: smile_signature_dev
+  
+test:
+  <<: *default
+  database: smile_signature_test
+
+production:
+  <<: *default
+  database: smile_signature_prod
