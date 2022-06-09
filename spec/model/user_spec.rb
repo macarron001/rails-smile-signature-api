@@ -31,6 +31,9 @@ RSpec.describe User, type: :model do
     it "has many appointments" do
       should respond_to(:appointments)
     end
+    it "has many transactions" do
+      should respond_to(:transactions)
+    end
 
     it "has many records" do
       should respond_to(:patient_records)
