@@ -16,7 +16,7 @@ RSpec.describe Profile, type: :model do
       last_name: 'Testing',
       date_of_birth: Time.now,
       sex: 'Male',
-      contact: 09196966969,
+      mobile: '09196966969',
       address: 'Las Pinas',
       last_visit: Time.now
     )
@@ -58,14 +58,8 @@ RSpec.describe Profile, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'is not valid without contact' do
-      subject.contact = nil
-
-      expect(subject).not_to be_valid
-    end
-
-    it 'is not valid without contact' do
-      subject.contact = nil
+    it 'is not valid without mobile' do
+      subject.mobile = nil
 
       expect(subject).not_to be_valid
     end
