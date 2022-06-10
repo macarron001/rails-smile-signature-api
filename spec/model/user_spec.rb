@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
 
   subject {
     described_class.new(
-      email: 'new@user.com',
+      username: 'boopybork',
       password: 'password'
     )
   }
@@ -14,8 +14,8 @@ RSpec.describe User, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is not valid without email' do
-      subject.email = nil
+    it 'is not valid without username' do
+      subject.username = nil
 
       expect(subject).not_to be_valid
     end
@@ -24,6 +24,23 @@ RSpec.describe User, type: :model do
       subject.password = nil
 
       expect(subject).not_to be_valid
+    end
+
+    it 'is not valid if username length is less than 6' do
+      subject.username = bork
+
+      expect(subject).not_to be_valid
+    end
+
+    it 'is not valid if username is not unique' do
+      subject.username = 'boopyborky'
+      
+      user = User.create!(
+        username: 'boopyborky',
+        password: 'password'
+      )
+
+      expect(user).not_to be_valid
     end
   end
 
