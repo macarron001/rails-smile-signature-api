@@ -20,7 +20,7 @@ RSpec.describe Profile, type: :model do
 
   subject {
     described_class.new(
-      patient_id: @user.id,
+      patient_id: @patient.id,
       first_name: 'Bork',
       last_name: 'Testing',
       branch: 'Main',
