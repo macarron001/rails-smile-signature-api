@@ -22,7 +22,7 @@ class Profile < ApplicationRecord
     )
   end
 
-  def self.update(key, value, user_id)
+  def self.edit_profile(key, value, user_id)
     profile = Profile.find_by(user_id: user_id)
     profile.update!(key: value)
   end
