@@ -110,4 +110,18 @@ RSpec.describe Appointment, type: :model do
 
     expect(@patient.appointments.count).to eq(1)
   end
+
+  context 'staff capabilities' do
+    it 'should edit the appointment' do
+      @subject.update!(time: '4:00 PM')
+
+      expect(@subject.time).to eq('4:00 PM')
+    end
+
+    it 'should delete the appointment' do
+      @subject.destroy
+
+      expect(@subject).not_to exist
+    end
+  end
 end
