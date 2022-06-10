@@ -11,6 +11,8 @@ class Transaction < ApplicationRecord
   validates :type, presence: true, :inclusion => { :in => ['cash', 'online', 'card']}
 
   def self.create_transaction(transaction_params)
+    patient_id = transaction_params[:patient_id]
+    profile = Profile.find_by(user_id: patient_id)
     Transaction.create!(
       :patient_id => transaction_params[:patient_id],
       :services => transaction_params[:services],
@@ -20,6 +22,9 @@ class Transaction < ApplicationRecord
       :remaining => transaction_params[:remaining],
       :type => transaction_params[:type]
     )
+
+    profile.set_obligations(patient_id) if transaction_params[:status] == 'partial'
+    profile.update_obligation(patient_id) if transaction_params[:status] == 'follow-up'
   end
 
   def self.pending?(patient_id)
