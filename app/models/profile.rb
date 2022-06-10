@@ -27,27 +27,18 @@ class Profile < ApplicationRecord
     profile.update!(key: value)
   end
   
-  def set_obligations(patient_id)
-    pending_transactions = Transaction.pending?(patient_id)
-    obligations = []
-    pending_transactions.each do |transaction|
-      obligation = {}
-      obligation[:status] = transaction.status,
-      obligation[:branch] = transaction.branch,
-      obligation[:services] = transaction.services,
-      obligation[:remaining] = transaction.remaining,
-      obligations << obligation
-    end
+  def set_obligation(transaction)
+    obligation = {}
+    obligation[:services] = transaction.services
+    obligation[:status] = transaction.status
+    obligation[:branch] = transaction.branch
+    obligation[:remaining] = transaction.remaining
 
-    self.update!(obligations: obligations)
-    return obligations
+    self.update!(obligation: obligation)
   end
 
   def update_obligation(transaction)
-    obligation = self.obligations.where(
-      services: services,
-      branch: branch
-    )
+    obligation = self.obligation
     if obligation.remaining == transaction.amount
       obligation.destroy
     else
