@@ -47,11 +47,14 @@ class User < ApplicationRecord
     Appointment.set_appointment(appointment_params, profile)
   end
 
-  def create_record(patient_id, branch, services)
+  def create_record(patient_id, branch, services, tooth, dentist_id, remarks)
     profile = Profile.find_by(patient_id: patient_id)
     record_params = {}
     record_params[:branch] = branch
+    record_params[:tooth] = tooth
+    record_params[:dentist_id] = dentist_id
     record_params[:services] = services
+    record_params[:remarks] = remarks
     PatientRecord.create_record(record_params, profile)
   end
 
