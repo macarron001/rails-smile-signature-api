@@ -74,8 +74,8 @@ RSpec.describe Profile, type: :model do
   end
 
   context 'associations' do
-    it { should has_one(:profile) }
-    it { should has_many(:services) }
+    it { should have_one(:profile) }
+    it { should have_many(:services) }
   end
 
   it 'should create a valid record' do
