@@ -22,7 +22,8 @@ class PatientRecord < ApplicationRecord
     )
   end
 
-  def self.edit_record(key, value, patient_id, dentist_id, date)
+  def self.edit_record(record_edit_params)
+    # key, value, patient_id, dentist_id, date
     schedule = Date.parse(date)
     record = PatientRecord.all.where(
       :patient_id => patient_id,
