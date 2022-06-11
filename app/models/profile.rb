@@ -40,7 +40,7 @@ class Profile < ApplicationRecord
   def update_obligation(transaction)
     obligation = self.obligation
     if obligation.remaining == transaction.amount
-      obligation.destroy
+      obligation = nil
     else
       remaining = obligation.remaining - transaction.amount
       obligation.update!(remaining: remaining)
