@@ -1,11 +1,13 @@
 class Profile < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user
 
   validates :user_id, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :date_of_birth, presence: true
   validates :sex, presence: true
+  validates :mobile, presence: true
+  validates :address, presence: true
 
   def self.create(profile_params)
     Profile.create!(

@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe Profile, type: :model do
 
   before(:each) do
-    @user = User.create(
+    @user = User.create!(
       email: 'new@user.com',
-      password: 'password'
+      password: 'password',
+      role: 'patient'
     )
   end
 
@@ -17,10 +18,10 @@ RSpec.describe Profile, type: :model do
       date_of_birth: Time.now,
       sex: 'Male',
       mobile: '09196966969',
-      address: 'Las Pinas',
-      last_visit: Time.now
+      address: 'Las Pinas'
     )
   }
+
 
   context 'validations' do
 
@@ -73,9 +74,6 @@ RSpec.describe Profile, type: :model do
 
   context 'associations' do
     it { should belong_to(:user) }
-    it { should belong_to(:appointment) }
-    it { should belong_to(:transaction) }
-    it { should belong_to(:patient_record) }
   end
 
   it 'should be able to edit details' do
