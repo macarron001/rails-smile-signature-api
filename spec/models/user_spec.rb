@@ -5,7 +5,6 @@ RSpec.describe User, type: :model do
   subject {
     described_class.new(
       email: 'bork@gmail.com',
-      username: 'boopybork',
       password: 'password',
       role: 'patient'
     )
@@ -14,7 +13,6 @@ RSpec.describe User, type: :model do
   before(:each) do
     @user = User.create!(
       email: 'boop@test.com', 
-      username: 'borkybork',
       password: 'password',
       role: 'patient'
       )
@@ -23,7 +21,6 @@ RSpec.describe User, type: :model do
 
     @dentist = User.create!(
       email: 'dentist@gmail.com',
-      username: 'imadentist',
       password: 'password',
       role: 'dentist'
     )
