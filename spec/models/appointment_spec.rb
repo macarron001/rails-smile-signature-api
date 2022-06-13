@@ -36,8 +36,8 @@ RSpec.describe Appointment, type: :model do
       patient_id: @patient.id,
       first_name: 'Bork',
       last_name: 'Testing',
-      mobile: '09196966969'
-      branch: 'Main',
+      mobile: '09196966969',
+      branch: 'main',
       services: @services,
       dentist_id: @dentist.id,
       time: '2:00 PM'

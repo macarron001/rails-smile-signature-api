@@ -1,13 +1,13 @@
 class Transaction < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates :patient_id, presence: true
   validates :services, presence: true
-  validates :status, presence: true :inclusion => { :in => ['full', 'partial', 'follow-up']}
+  validates :status, presence: true, :inclusion => { :in => ['full', 'partial', 'follow-up']}
   validates :branch, presence: true
   validates :amount, presence: true, numericality: {greater_than: 0}
   validates :remaining, presence: true
-  validates :type, presence: true, :inclusion => { :in => ['cash', 'online', 'card']}
+  validates :payment_type, presence: true, :inclusion => { :in => ['cash', 'online', 'card']}
 
   def self.create_transaction(transaction_params)
     patient_id = transaction_params[:patient_id]
@@ -19,7 +19,7 @@ class Transaction < ApplicationRecord
       :branch => transaction_params[:branch],
       :amount => transaction_params[:amount],
       :remaining => transaction_params[:remaining],
-      :type => transaction_params[:type]
+      :payment_type => transaction_params[:payment_type]
     )
 
     profile.set_obligation(transaction) if transaction_params[:status] == 'partial'

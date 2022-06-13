@@ -31,7 +31,7 @@ class Profile < ApplicationRecord
     obligation[:branch] = transaction.branch
     obligation[:remaining] = transaction.remaining
 
-    self.update!(obligation: obligation)
+    self.update!(obligations: obligation)
   end
 
   def update_obligation(transaction)
