@@ -1,6 +1,5 @@
 class Transaction < ApplicationRecord
-  has_one :profile
-  has_many :services
+  belongs_to :user
 
   validates :patient_id, presence: true
   validates :services, presence: true

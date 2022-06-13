@@ -1,28 +1,22 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
-  has_many :appointments, through: :profile
-  has_many :patient_records, through: :profile
+  has_one :profile
+  has_many :appointments
+  has_many :patient_records
   has_many :transactions
 
-  validates :username, presence: true, uniqueness: true, length: {minimum: 6}
+  validates :email, uniqueness: true
   validates :password, presence: true
   validates :role, :inclusion => { :in => ['patient', 'dentist', 'admin']}
 
+  
   devise :database_authenticatable, :registerable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: self
+         :jwt_authenticatable, jwt_revocation_strategy: self, :authentication_keys => [:username]
 
 
   def create_profile(profile_params)
-    # profile_params = {}
-    # profile_params[:user_id] = user_id
-    # profile_params[:first_name] = first_name
-    # profile_params[:last_name] = last_name
-    # profile_params[:date_of_birth] = date_of_birth
-    # profile_params[:sex] = sex
-    # profile_params[:mobile] = mobile
-    # profile_params[:address] = address
-    Profile.create_new(profile_params)
+    Profile.create(profile_params)
   end
 
   def set_appointment(first_name, last_name, appointment_params)
@@ -38,22 +32,11 @@ class User < ApplicationRecord
       profile[:mobile] = ""
     end
     
-    # appointment_params[:services] = services
-    # appointment_params[:schedule_date] = date
-    # appointment_params[:branch] = branch
-    # appointment_params[:dentist_id] = dentist_id
-    # appointment_params[:schedule_time] = time
     Appointment.set_appointment(appointment_params, profile)
   end
 
-  def create_record(patient_id, record_params)
-    profile = Profile.find_by(patient_id: patient_id)
-    # record_params = {}
-    # record_params[:branch] = branch
-    # record_params[:tooth] = tooth
-    # record_params[:dentist_id] = dentist_id
-    # record_params[:services] = services
-    # record_params[:remarks] = remarks
+  def create_record(id, record_params)
+    profile = Profile.find_by(user_id: id)
     PatientRecord.create_record(record_params, profile)
   end
 
@@ -65,8 +48,4 @@ class User < ApplicationRecord
     )
     return true if appointments.blank?
   end
-
-
-  
-
 end
