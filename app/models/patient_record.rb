@@ -1,23 +1,22 @@
 class PatientRecord < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :dentist_id, presence: true
+  validates :user_id, presence: true
   validates :services, presence: true
   validates :branch, presence: true
   validates :services, presence: true
 
-  def self.create_record(record_params, profile)
+  def self.create_record(record_params, id)
     PatientRecord.create!(
-      :patient_id => profile[:user_id],
-      :first_name => profile[:first_name],
-      :last_name => profile[:last_name],
+      :first_name => record_params[:first_name],
+      :last_name => record_params[:last_name],
       :branch => record_params[:branch],
       :tooth => record_params[:tooth],
       :services => record_params[:services],
-      :dentist_id => record_params[:dentist_id],
-      :remarks => record_params[:remarks]
+      :remarks => record_params[:remarks],
+      :user_id => id
     )
   end
 

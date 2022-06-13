@@ -1,5 +1,5 @@
 class Appointment < ApplicationRecord
-  belongs_to :patient, :class_name => 'User', optional: true
+  belongs_to :user
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -8,23 +8,21 @@ class Appointment < ApplicationRecord
   validates :branch, presence: true
   validates :services, presence: true
 
-  def self.set_appointment(appointment_params, profile)
+  def self.set_appointment(appointment_params, id)
     date = appointment_params[:schedule_date]
     time = appointment_params[:schedule_time]
     branch = appointment_params[:branch]
 
     if Appointment.schedule_available?(date, time, branch)
       Appointment.create!(
+        :user_id => id,
         :branch => branch,
         :schedule_date => date,
         :schedule_time => time,
-        :patient_id => profile[:patient_id],
-        :first_name => profile[:first_name],
-        :last_name => profile[:last_name],
-        :mobile => profile[:mobile],
-        :type => appointment_params[:type],
-        :services => appointment_params[:services],
-        :dentist_id => appointment_params[:dentist_id]
+        :first_name => appointment_params[:first_name],
+        :last_name => appointment_params[:last_name],
+        :mobile => appointment_params[:mobile],
+        :services => appointment_params[:services]
       )
     end
   end

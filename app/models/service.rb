@@ -1,5 +1,4 @@
 class Service < ApplicationRecord
-
   validates :name, presence: true
   validates :price, presence: true, numericality: {greater_than: 0}
   validates :branch, presence: true, :inclusion => { :in => ['marcos-alvarez', 'almanza', 'all']}
