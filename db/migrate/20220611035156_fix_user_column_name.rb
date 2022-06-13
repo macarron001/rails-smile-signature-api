@@ -1,5 +1,6 @@
 class FixUserColumnName < ActiveRecord::Migration[7.0]
   def change
-    rename_column :users, :email, :username
+    remove_column :users, :email
+    add_column :users, :username, :string, null: false
   end
 end

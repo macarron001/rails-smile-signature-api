@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_11_035156) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_13_101744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appointments", force: :cascade do |t|
     t.date "schedule_date", null: false
-    t.integer "patient_id"
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "mobile"
@@ -27,6 +26,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_035156) do
     t.time "schedule_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "patient_id"
+    t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
 
   create_table "patient_records", force: :cascade do |t|
@@ -65,7 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_035156) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.integer "patient_id"
     t.json "services"
     t.string "status"
     t.string "branch", null: false
@@ -74,10 +74,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_035156) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "patient_id_id"
+    t.index ["patient_id_id"], name: "index_transactions_on_patient_id_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -86,9 +87,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_035156) do
     t.datetime "updated_at", null: false
     t.string "jti", null: false
     t.string "role"
+    t.string "email", null: false
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "profiles", "users"
