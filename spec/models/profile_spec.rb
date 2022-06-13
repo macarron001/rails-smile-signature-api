@@ -6,7 +6,7 @@ RSpec.describe Profile, type: :model do
     @user = User.create!(
       email: 'new@user.com',
       password: 'password',
-      role: 'patient'
+      role: 'staff'
     )
   end
 

@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe PatientRecord, type: :model do
 
   before(:each) do
-    @patient = User.create(
+    @staff = User.create(
       email: 'patient@user.com',
       password: 'password',
-      role: 'patient'
+      role: 'staff'
     )
 
     @dentist = User.create(
@@ -15,39 +15,28 @@ RSpec.describe PatientRecord, type: :model do
       role: 'dentist'
     )
 
-    @record_params = {
-      patient_id: @patient.id,
-      first_name: 'Bork',
-      last_name: 'Testing',
-      branch: 'main',
-      dentist_id: @dentist.id,
-      services: ['tooth extraction', 'basic cleaning'],
-      remarks: "some notes"
-    }
-
-    @profile_params = {
-      user_id: @patient.id,
-      first_name: 'Boopy',
-      last_name: 'Bork',
-      date_of_birth: Date.parse('12/02/1985'),
-      sex: 'male',
-      mobile: '09193632424',
-      address: 'Las Pinas'
-    }
-
     @services = ['tooth extraction', 'basic cleaning']
-    @patient.create_profile(@profile_params)
+
+    @record_params = {
+      first_name: 'Bork',
+      last_name: 'Borky',
+      branch: 'marcos-alvarez',
+      tooth: [15, 16, 17],
+      services: @services,
+      remarks: 'some remarks'
+    }
+
   end
 
   subject {
     described_class.new(
-      patient_id: @patient.id,
       first_name: 'Bork',
-      last_name: 'Testing',
-      branch: 'main',
-      dentist_id: @dentist.id,
+      last_name: 'Borky',
+      branch: 'marcos-alvarez',
+      tooth: [15, 16, 17],
       services: @services,
-      remarks: "some notes"
+      remarks: 'some remarks',
+      user_id: @dentist.id
     )
   }
 
@@ -57,8 +46,8 @@ RSpec.describe PatientRecord, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is not valid without dentist id' do
-      subject.dentist_id = nil
+    it 'is not valid without user_id' do
+      subject.user_id = nil
 
       expect(subject).not_to be_valid
     end
@@ -89,9 +78,9 @@ RSpec.describe PatientRecord, type: :model do
   end
 
   it 'should create a valid record' do
-    @dentist.create_record(@patient.id, @record_params )
+    @dentist.create_record(@record_params )
 
-    expect(PatientRecord.all.count).to eq(1)
+    expect(@dentist.patient_records.count).to eq(1)
   end
 
   it 'should edit a record' do

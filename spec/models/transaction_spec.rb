@@ -18,7 +18,8 @@ RSpec.describe Transaction, type: :model do
     @services = ['tooth extraction', 'basic cleaning']
 
     @transaction_params = {
-      patient_id: @patient.id,
+      first_name: 'Boopy',
+      last_name: 'Bork',
       services: @services,
       status: 'partial',
       branch: 'main',
@@ -36,13 +37,12 @@ RSpec.describe Transaction, type: :model do
       mobile: '09193632424',
       address: 'Las Pinas'
     }
-
-    @patient.create_profile(@profile_params)
   end
 
   subject {
     described_class.new(
-      patient_id: @patient.id,
+      first_name: 'Boopy',
+      last_name: 'Bork',
       services: @services,
       status: 'partial',
       branch: 'main',
@@ -57,8 +57,14 @@ RSpec.describe Transaction, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is not valid without a patient id' do
-      subject.patient_id = nil
+    it 'is not valid without first_name' do
+      subject.first_name = nil
+
+      expect(subject).not_to be_valid
+    end
+
+    it 'is not valid without last_name' do
+      subject.last_name = nil
 
       expect(subject).not_to be_valid
     end
@@ -99,11 +105,6 @@ RSpec.describe Transaction, type: :model do
       expect(subject).not_to be_valid
     end
   end
-
-    context 'associations' do
-      it { should belong_to(:user) }
-    end
-
 
     it 'generates a transaction record' do
       Transaction.create_transaction(@transaction_params)

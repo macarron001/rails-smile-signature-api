@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Appointment, type: :model do
 
   before(:each) do
-    @patient = User.create(
+    @staff = User.create(
       email: 'patient@user.com',
       password: 'password',
-      role: 'patient'
+      role: 'staff'
     )
 
     @dentist = User.create(
@@ -18,29 +18,27 @@ RSpec.describe Appointment, type: :model do
     @services = ['tooth extraction', 'basic cleaning']
 
     @appointment_params = {
-      schedule_date: Time.now,
-      patient_id: @patient_id,
+      branch: 'marcos-alvarez',
+      schedule_date: Date.parse('29/06/2022'),
+      schedule_time: Time.parse('13:00'),
       first_name: 'Bork',
-      last_name: 'Testing',
-      branch: 'Main',
-      services: @services,
-      dentist_id: @dentist.id,
-      schedule_time: '2:00 PM'
+      last_name: 'Borky',
+      mobile: '0915549323',
+      services: @services
     }
 
   end
 
   subject {
     described_class.new(
-      schedule_date: Time.now,
-      patient_id: @patient.id,
+      user_id: @dentist.id,
+      branch: 'marcos-alvarez',
+      schedule_date: Date.parse('29/06/2022'),
+      schedule_time: Time.parse('13:00'),
       first_name: 'Bork',
-      last_name: 'Testing',
-      mobile: '09196966969',
-      branch: 'main',
-      services: @services,
-      dentist_id: @dentist.id,
-      schedule_time: '2:00 PM'
+      last_name: 'Borky',
+      mobile: '0915549323',
+      services: @services
     )
   }
 
@@ -87,7 +85,7 @@ RSpec.describe Appointment, type: :model do
   end
 
   context 'associations' do
-    it { should belong_to(:patient) }
+    it { should belong_to(:user) }
   end
 
   context 'availability' do
@@ -99,9 +97,9 @@ RSpec.describe Appointment, type: :model do
   end
 
   it 'should allow patient to set an appointment' do
-    @patient.set_appointment(@appointment_params)
+    @dentist.set_appointment(@appointment_params)
 
-    expect(Appointment.all.count).to eq(1)
+    expect(@dentist.appointments.count).to eq(1)
   end
 
   context 'staff capabilities' do

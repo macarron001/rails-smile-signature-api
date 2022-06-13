@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     described_class.new(
       email: 'bork@gmail.com',
       password: 'password',
-      role: 'patient'
+      role: 'staff'
     )
   }
 
@@ -14,10 +14,10 @@ RSpec.describe User, type: :model do
     @user = User.create!(
       email: 'boop@test.com', 
       password: 'password',
-      role: 'patient'
+      role: 'staff'
       )
 
-    @services = { "services" => ["somestring1", "somestring2"] }
+    @services = ["service1", "service2"]
 
     @dentist = User.create!(
       email: 'dentist@gmail.com',
@@ -26,11 +26,13 @@ RSpec.describe User, type: :model do
     )
 
     @appointment_params = {
-      services: @services.values,
-      schedule_date: Date.parse('29/06/2022'),
       branch: 'marcos-alvarez',
-      dentist_id: @dentist.id,
-      schedule_time: Time.parse('13:00')
+      schedule_date: Date.parse('29/06/2022'),
+      schedule_time: Time.parse('13:00'),
+      first_name: 'Bork',
+      last_name: 'Borky',
+      mobile: '0915549323',
+      services: @services
     }
 
     @profile_params = {
@@ -44,10 +46,11 @@ RSpec.describe User, type: :model do
     }
 
     @record_params = {
+      first_name: 'Bork',
+      last_name: 'Borky',
       branch: 'marcos-alvarez',
       tooth: [15, 16, 17],
-      dentist_id: @dentist.id,
-      services: @services.values,
+      services: @services,
       remarks: 'some remarks'
     }
 
@@ -59,8 +62,8 @@ RSpec.describe User, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is not valid without username' do
-      subject.username = nil
+    it 'is not valid without email' do
+      subject.email = nil
 
       expect(subject).not_to be_valid
     end
@@ -71,23 +74,6 @@ RSpec.describe User, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'is not valid if username length is less than 6' do
-      subject.username = 'bork'
-
-      expect(subject).not_to be_valid
-    end
-
-    it 'is not valid if username is not unique' do
-
-      user1 = User.new(
-        email: 'boop@gmail.com',
-        username: 'borkybork',
-        password: 'password',
-        role: 'patient'
-      )
-
-      expect(user1).not_to be_valid
-    end
   end
 
   context 'validating user associations' do
@@ -108,8 +94,8 @@ RSpec.describe User, type: :model do
 
   context 'validating user capabilities'
     it 'can set an appointment' do
-      subject.set_appointment('Boopy', 'Bork', @appointment_params)
-      appointment = Appointment.find_by(patient_id: subject.id)
+      @dentist.set_appointment(@appointment_params, @dentist.id)
+      appointment = @dentist.appointments
 
       expect(appointment).not_to be_nil
     end
@@ -122,9 +108,8 @@ RSpec.describe User, type: :model do
     end
 
     it 'can generate a record' do
-      profile = @user.create_profile(@profile_params)
-      @dentist.create_record(@user.id, @record_params)
-      record = PatientRecord.find_by(patient_id: @user.id)
+      @dentist.create_record(@record_params)
+      record = @dentist.patient_records
 
       expect(record).not_to be_nil
     end
