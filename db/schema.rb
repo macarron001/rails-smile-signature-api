@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_13_101744) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_13_114528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,11 +71,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_101744) do
     t.string "branch", null: false
     t.decimal "amount", precision: 8, scale: 2
     t.decimal "remaining", precision: 8, scale: 2
-    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "patient_id_id"
-    t.index ["patient_id_id"], name: "index_transactions_on_patient_id_id"
+    t.bigint "patient_id"
+    t.string "payment_type"
+    t.index ["patient_id"], name: "index_transactions_on_patient_id"
   end
 
   create_table "users", force: :cascade do |t|
