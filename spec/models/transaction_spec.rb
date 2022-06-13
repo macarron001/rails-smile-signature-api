@@ -5,20 +5,39 @@ RSpec.describe Transaction, type: :model do
   before(:each) do
     @patient = User.create(
       email: 'new@user.com',
-      password: 'password'
+      password: 'password',
+      role: 'patient'
+    )
+
+    @dentist = User.create!(
+      email: 'dentist@gmail.com',
+      password: 'password',
+      role: 'dentist'
     )
     
     @services = ['tooth extraction', 'basic cleaning']
 
-    @record_params = (
-      patient_id: @user.id,
-      first_name: 'Bork',
-      last_name: 'Testing',
-      branch: 'Main',
-      dentist_id: @dentist.id,
+    @transaction_params = {
+      patient_id: @patient.id,
       services: @services,
-      remarks: "some notes"
-    )
+      status: 'partial',
+      branch: 'main',
+      amount: 500,
+      remaining: 0,
+      payment_type: 'cash'
+    }
+
+    @profile_params = {
+      user_id: @patient.id,
+      first_name: 'Boopy',
+      last_name: 'Bork',
+      date_of_birth: Date.parse('12/02/1985'),
+      sex: 'male',
+      mobile: '09193632424',
+      address: 'Las Pinas'
+    }
+
+    @patient.create_profile(@profile_params)
   end
 
   subject {
@@ -29,7 +48,7 @@ RSpec.describe Transaction, type: :model do
       branch: 'main',
       amount: 500,
       remaining: 0,
-      type: 'cash'
+      payment_type: 'cash'
     )
   }
 
@@ -74,28 +93,28 @@ RSpec.describe Transaction, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it 'is not valid without type' do
-      subject.type = nil
+    it 'is not valid without payment_type' do
+      subject.payment_type = nil
 
       expect(subject).not_to be_valid
     end
   end
 
     context 'associations' do
-      it { should have_one(:profile) }
-      it { should have_many(:services) }
+      it { should belong_to(:user) }
     end
 
 
     it 'generates a transaction record' do
-      @user.create_record(@record_params)
+      Transaction.create_transaction(@transaction_params)
       
-      expect(@user.transactions.count).to eq(1)
+      expect(Transaction.first).not_to be_nil
     end
 
     it 'edits a transaction record' do
-      @subject.update!(status: 'full')
+      transaction = Transaction.create!(@transaction_params)
+      transaction.update!(status: 'full')
 
-      expect(@subject.status).to eq('full')
+      expect(transaction.status).to eq('full')
     end
 end 

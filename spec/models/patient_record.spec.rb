@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Profile, type: :model do
+RSpec.describe PatientRecord, type: :model do
 
   before(:each) do
     @patient = User.create(
@@ -15,7 +15,28 @@ RSpec.describe Profile, type: :model do
       role: 'dentist'
     )
 
+    @record_params = {
+      patient_id: @patient.id,
+      first_name: 'Bork',
+      last_name: 'Testing',
+      branch: 'main',
+      dentist_id: @dentist.id,
+      services: ['tooth extraction', 'basic cleaning'],
+      remarks: "some notes"
+    }
+
+    @profile_params = {
+      user_id: @patient.id,
+      first_name: 'Boopy',
+      last_name: 'Bork',
+      date_of_birth: Date.parse('12/02/1985'),
+      sex: 'male',
+      mobile: '09193632424',
+      address: 'Las Pinas'
+    }
+
     @services = ['tooth extraction', 'basic cleaning']
+    @patient.create_profile(@profile_params)
   end
 
   subject {
@@ -23,7 +44,7 @@ RSpec.describe Profile, type: :model do
       patient_id: @patient.id,
       first_name: 'Bork',
       last_name: 'Testing',
-      branch: 'Main',
+      branch: 'main',
       dentist_id: @dentist.id,
       services: @services,
       remarks: "some notes"
@@ -34,12 +55,6 @@ RSpec.describe Profile, type: :model do
 
     it 'should create a valid record' do
       expect(subject).to be_valid
-    end
-    
-    it 'is not valid without patient id' do
-      subject.patient_id = nil
-
-      expect(subject).not_to be_valid
     end
 
     it 'is not valid without dentist id' do
@@ -73,15 +88,10 @@ RSpec.describe Profile, type: :model do
     end
   end
 
-  context 'associations' do
-    it { should have_one(:profile) }
-    it { should have_many(:services) }
-  end
-
   it 'should create a valid record' do
-    @dentist.create_record(subject.args)
+    @dentist.create_record(@patient.id, @record_params )
 
-    expect(@patient.records.count).to eq(1)
+    expect(PatientRecord.all.count).to eq(1)
   end
 
   it 'should edit a record' do

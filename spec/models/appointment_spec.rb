@@ -17,22 +17,22 @@ RSpec.describe Appointment, type: :model do
 
     @services = ['tooth extraction', 'basic cleaning']
 
-    @appointment_params = [
-      schedule: Time.now,
+    @appointment_params = {
+      schedule_date: Time.now,
       patient_id: @patient_id,
       first_name: 'Bork',
       last_name: 'Testing',
       branch: 'Main',
       services: @services,
       dentist_id: @dentist.id,
-      time: '2:00 PM'
-    ]
+      schedule_time: '2:00 PM'
+    }
 
   end
 
   subject {
     described_class.new(
-      schedule: Time.now,
+      schedule_date: Time.now,
       patient_id: @patient.id,
       first_name: 'Bork',
       last_name: 'Testing',
@@ -40,19 +40,13 @@ RSpec.describe Appointment, type: :model do
       branch: 'main',
       services: @services,
       dentist_id: @dentist.id,
-      time: '2:00 PM'
+      schedule_time: '2:00 PM'
     )
   }
 
   context 'validations' do
     it 'should create a valid record' do
       expect(subject).to be_valid
-    end
-
-    it 'is not valid without patient id' do
-      subject.patient_id = nil
-
-      expect(subject).not_to be_valid
     end
 
     it 'is not valid without first name' do
@@ -80,48 +74,47 @@ RSpec.describe Appointment, type: :model do
     end
 
     it 'is not valid without date' do
-      subject.date = nil
+      subject.schedule_date = nil
 
       expect(subject).not_to be_valid
     end
 
     it 'is not valid without time' do
-      subject.time = nil
+      subject.schedule_time = nil
 
       expect(subject).not_to be_valid
     end
   end
 
   context 'associations' do
-    it { should have_one(:profile) }
-    it { should have_many(:services) }
+    it { should belong_to(:patient) }
   end
 
   context 'availability' do
     it 'checks for available schedule' do
-      available = Appointment.availability(@dentist_id)
+      available = Appointment.schedule_available?(Time.now, Time.parse('4:00 PM'), 'main')
 
-      expect(available.count).to be > 0 
+      expect(available).to eq(true) 
     end
   end
 
   it 'should allow patient to set an appointment' do
     @patient.set_appointment(@appointment_params)
 
-    expect(@patient.appointments.count).to eq(1)
+    expect(Appointment.all.count).to eq(1)
   end
 
   context 'staff capabilities' do
     it 'should edit the appointment' do
-      @subject.update!(time: '4:00 PM')
+      subject.update!(branch: 'Marcos Alvarez')
 
-      expect(@subject.time).to eq('4:00 PM')
+      expect(subject.branch).to eq('Marcos Alvarez')
     end
 
     it 'should delete the appointment' do
-      @subject.destroy
+      subject.destroy
 
-      expect(@subject).not_to exist
+      expect(Appointment.first).to eq(nil)
     end
   end
 end
