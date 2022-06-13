@@ -48,4 +48,8 @@ class User < ApplicationRecord
     )
     return true if appointments.blank?
   end
+
+  def create_service(service_params)
+    Service.create_service(service_params)
+  end
 end
