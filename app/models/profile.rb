@@ -1,8 +1,5 @@
 class Profile < ApplicationRecord
-  belongs_to :user
-  belongs_to :transaction
-  belongs_to :appointment
-  belongs_to :patient_record
+  belongs_to :user, optional: true
 
   validates :user_id, presence: true
   validates :first_name, presence: true
@@ -12,12 +9,12 @@ class Profile < ApplicationRecord
 
   def self.create(profile_params)
     Profile.create!(
-      :user_id => profile_params[:user_id]
-      :first_name => profile_params[:first_name]
-      :last_name => profile_params[:last_name]
-      :date_of_birth => profile_params[:first_name]
-      :sex => profile_params[:sex]
-      :mobile => profile_params[:mobile]
+      :user_id => profile_params[:user_id],
+      :first_name => profile_params[:first_name],
+      :last_name => profile_params[:last_name],
+      :date_of_birth => profile_params[:date_of_birth],
+      :sex => profile_params[:sex],
+      :mobile => profile_params[:mobile],
       :address => profile_params[:address]
     )
   end
