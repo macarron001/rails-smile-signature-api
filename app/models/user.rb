@@ -19,8 +19,14 @@ class User < ApplicationRecord
     Profile.create(profile_params)
   end
 
-  def set_appointment(first_name, last_name, appointment_params)
-    record = Profile.find_by(first_name: first_name, last_name: last_name)
+  def set_appointment(appointment_params)
+    first_name = appointment_params[:first_name]
+    last_name = appointment_params[:last_name]
+    
+    record = Profile.find_by(
+      first_name: first_name, 
+      last_name: last_name
+    )
 
     if record.present?
       profile = record
