@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "CurrentUsersController", type: :request do
+RSpec.describe "TransactionsController", type: :request do
 
   Transaction.create!([{
     first_name: 'Bork1',
