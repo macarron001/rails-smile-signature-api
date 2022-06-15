@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_13_180155) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_15_030745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,14 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_180155) do
   create_table "patient_records", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "branch", null: false
-    t.json "services"
-    t.json "tooth"
-    t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_patient_records_on_user_id"
+    t.string "middle_name"
+    t.string "gender"
+    t.string "date_of_birth"
+    t.string "mobile"
+    t.string "email"
+    t.string "street_address"
+    t.string "barangay"
+    t.string "city"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -92,6 +94,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_180155) do
   end
 
   add_foreign_key "appointments", "users"
-  add_foreign_key "patient_records", "users"
   add_foreign_key "profiles", "users"
 end
