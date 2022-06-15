@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_15_034013) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_15_034720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_034013) do
     t.string "street_address"
     t.string "barangay"
     t.string "city"
+    t.json "obligation"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -70,7 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_034013) do
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "obligations"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
