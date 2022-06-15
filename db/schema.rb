@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_15_030745) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_15_034013) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_030745) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
+
+  create_table "dental_histories", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "middle_name", null: false
+    t.string "last_name", null: false
+    t.json "services"
+    t.json "tooth"
+    t.string "branch"
+    t.string "remarks"
+    t.bigint "patient_record_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_record_id"], name: "index_dental_histories_on_patient_record_id"
+    t.index ["user_id"], name: "index_dental_histories_on_user_id"
   end
 
   create_table "patient_records", force: :cascade do |t|
@@ -94,5 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_030745) do
   end
 
   add_foreign_key "appointments", "users"
+  add_foreign_key "dental_histories", "patient_records"
+  add_foreign_key "dental_histories", "users"
   add_foreign_key "profiles", "users"
 end

@@ -1,0 +1,2 @@
+class DentalHistory < ApplicationRecord
+end
