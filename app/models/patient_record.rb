@@ -6,7 +6,6 @@ class PatientRecord < ApplicationRecord
   validates :user_id, presence: true
   validates :services, presence: true
   validates :branch, presence: true
-  validates :services, presence: true
 
   def self.create_record(record_params, id)
     PatientRecord.create!(
