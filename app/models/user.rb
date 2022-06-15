@@ -15,7 +15,8 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self, :authentication_keys => [:username]
 
   def create_profile(profile_params)
-    Profile.create(profile_params)
+    id = self.id
+    Profile.create(profile_params, id)
   end
 
   def set_appointment(appointment_params)
