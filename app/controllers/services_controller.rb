@@ -1,13 +1,14 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin, except: [:available_services]
+  before_action :authenticate_admin, except: [:available_services, :service_details]
+  before_action :set_service, only: [:update_service, :remove_service]
 
   def create_service
     service = current_user.create_service(service_params)
 
     render json: json = {
       status: 201, 
-      message: `Service added!`,
+      message: 'Service added!',
       service: service,
     }, status: :ok
   end
@@ -19,17 +20,17 @@ class ServicesController < ApplicationController
   end
 
   def service_details
-    service = Service.find_by(name: params:[name])
+    service = Service.where(name: params[:name])
 
     render json: service
   end
 
-  def update
+  def update_service
     if @service.update(service_params)
       render json: json = {
         status: 201, 
         message: 'Service updated!',
-        service: service,
+        service: @service,
       }, status: :ok
     else
       render json: service.errors, status: :unprocessable_entity
@@ -37,14 +38,13 @@ class ServicesController < ApplicationController
   end
 
   def remove_service
-    current_user.remove_service(params:[:name])
+    @service.destroy
 
     render json: json = {
       status: 201, 
-      message: `Service removed!`
+      message: 'Service removed!'
     }, status: :ok
   end
-
 
   private
   
