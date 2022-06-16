@@ -41,4 +41,9 @@ class User < ApplicationRecord
   def create_service(service_params)
     Service.create_service(service_params)
   end
+
+  def remove_service(service_name)
+    service = Service.find_by(name: service_name)
+    service.destroy
+  end
 end
