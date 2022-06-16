@@ -7,13 +7,11 @@ class User < ApplicationRecord
   has_many :transactions
   has_many :dental_records
 
-  validates :email, uniqueness: true
+  validates :email, presence: true
   validates :password, presence: true
-  validates :role, :inclusion => { :in => ['staff', 'dentist', 'admin']}
 
   
-  devise :database_authenticatable, :registerable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: self, :authentication_keys => [:username]
+  devise :database_authenticatable, :registerable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   def create_profile(profile_params)
     id = self.id
