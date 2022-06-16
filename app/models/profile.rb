@@ -5,7 +5,7 @@ class Profile < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :date_of_birth, presence: true
-  validates :sex, presence: true
+  validates :gender, presence: true
   validates :mobile, presence: true
   validates :address, presence: true
 
@@ -13,9 +13,10 @@ class Profile < ApplicationRecord
     Profile.create!(
       :user_id => id,
       :first_name => profile_params[:first_name],
+      :middle_name => profile_params[:middle_name],
       :last_name => profile_params[:last_name],
       :date_of_birth => profile_params[:date_of_birth],
-      :sex => profile_params[:sex],
+      :gender => profile_params[:gender],
       :mobile => profile_params[:mobile],
       :address => profile_params[:address]
     )
