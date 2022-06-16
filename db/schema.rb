@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_15_034720) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_16_043104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,6 +93,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_034720) do
     t.string "payment_type"
     t.string "first_name", null: false
     t.string "last_name", null: false
+    t.bigint "patient_record_id"
+    t.index ["patient_record_id"], name: "index_transactions_on_patient_record_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -113,4 +115,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_034720) do
   add_foreign_key "dental_histories", "patient_records"
   add_foreign_key "dental_histories", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "transactions", "patient_records"
 end
