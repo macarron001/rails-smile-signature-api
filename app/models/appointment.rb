@@ -22,7 +22,8 @@ class Appointment < ApplicationRecord
         :first_name => appointment_params[:first_name],
         :last_name => appointment_params[:last_name],
         :mobile => appointment_params[:mobile],
-        :services => appointment_params[:services]
+        :services => appointment_params[:services],
+        :dentist_id => id
       )
     end
   end
@@ -35,5 +36,9 @@ class Appointment < ApplicationRecord
     )
 
     return true if appointments.blank?
+  end
+
+  def dentist
+    User.find(dentist_id)
   end
 end
