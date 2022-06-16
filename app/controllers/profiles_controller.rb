@@ -2,25 +2,44 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!
   before_action :get_user
 
-  def create
-    user = @user.create_profile(profile_params)
+  def create_profile
+    profile = @user.create_profile(profile_params)
 
     render json: json = {
       status: 201, 
-      message: `Profile created!`,
-      profile: user,
+      message: 'Profile created',
+      profile: profile,
     }, status: :ok
   end
 
-  def edit
+  def show_profile
+    profile = @user.profile
+
+    render json: json = {
+      status: 201, 
+      message: 'Here is your profile',
+      profile: profile,
+    }, status: :ok
+  end
+
+  def update_profile
     profile = Profile.find_by(user_id: @user.id)
-    profile.update!
+    
+    if profile.update(profile_params)
+      render json: json = {
+        status: 201, 
+        message: 'Profile updated!',
+        profile: profile,
+      }, status: :ok
+    else
+      render json: profile.errors, status: :unprocessable_entity
+    end
   end
 
   private
 
   def profile_params 
-    params.require(:profile).permit(:first_name, :last_name, :date_of_birth, :sex, :mobile, :address)
+    params.require(:profile).permit(:first_name, :last_name, :middle_name, :date_of_birth, :gender, :mobile, :address)
   end
 
   def get_user
