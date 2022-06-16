@@ -26,9 +26,13 @@ class ServicesController < ApplicationController
 
   def update
     if @service.update(service_params)
-      render json: @service
+      render json: json = {
+        status: 201, 
+        message: 'Service updated!',
+        service: service,
+      }, status: :ok
     else
-      render json: @service.errors, status: :unprocessable_entity
+      render json: service.errors, status: :unprocessable_entity
     end
   end
 
