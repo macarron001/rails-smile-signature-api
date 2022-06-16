@@ -23,4 +23,23 @@ class PatientRecord < ApplicationRecord
     )
   end
 
+  def set_obligation(transaction)
+    obligation = {}
+    obligation[:services] = transaction.services
+    obligation[:status] = transaction.status
+    obligation[:branch] = transaction.branch
+    obligation[:remaining] = transaction.remaining
+
+    self.update!(obligation: obligation)
+  end
+
+  def update_obligation(transaction)
+    obligation = self.obligation
+    if obligation.remaining == transaction.amount
+      obligation = nil
+    else
+      remaining = obligation.remaining - transaction.amount
+      obligation.update!(remaining: remaining)
+    end
+  end
 end
