@@ -1,6 +1,6 @@
 class DentalRecord < ApplicationRecord
-  belongs_to :user
-  belongs_to :patient_record
+  belongs_to :user, optional: true
+  belongs_to :patient_record, optional: true
 
   validates :first_name, presence: true
   validates :middle_name, presence: true
