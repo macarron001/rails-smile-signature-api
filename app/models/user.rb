@@ -48,4 +48,9 @@ class User < ApplicationRecord
   def create_dental_record(dental_record_params)
     DentalRecord.create_record(dental_record_params)
   end
+
+  def create_transaction(transaction_params, patient_record)
+    id = self.id
+    Transaction.create_transaction(transaction_params, patient_record, id)
+  end
 end
