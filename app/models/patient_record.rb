@@ -18,6 +18,7 @@ class PatientRecord < ApplicationRecord
       :gender => record_params[:gender],
       :date_of_birth => record_params[:date_of_birth],
       :mobile => record_params[:mobile],
+      :email => record_params[:email],
       :street_address => record_params[:street_address],
       :barangay => record_params[:barangay],
       :city => record_params[:city]

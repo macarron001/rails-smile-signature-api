@@ -24,8 +24,7 @@ class User < ApplicationRecord
   end
 
   def create_record(record_params)
-    id = self.id
-    PatientRecord.create_record(record_params, id)
+    PatientRecord.create_record(record_params)
   end
 
   def is_available?(date, time, id)

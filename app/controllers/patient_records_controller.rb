@@ -1,16 +1,20 @@
 class PatientRecordsController < ApplicationController
   before_action :authenticate_user!
   before_action :get_user
-  before_action :get_patient_record, only: [:update_record]
+  before_action :get_patient_record, only: [:update_record, :show_record]
 
   def create
     record = @user.create_record(patient_record_params)
 
     render json: json = {
       status: 201, 
-      message: `Patient record created!`,
+      message: 'Patient record created!',
       record: record,
     }, status: :ok
+  end
+
+  def show_record
+    render json: @patient_record
   end
 
   def update_record
@@ -18,7 +22,7 @@ class PatientRecordsController < ApplicationController
 
     render json: json = {
       status: 201,
-      message: `Patient record updated!`,
+      message: 'Patient record updated!',
       record: @patient_record,
     }, status: :ok
   end
