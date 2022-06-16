@@ -7,7 +7,7 @@ class CurrentUserController < ApplicationController
   end
 
   def staff
-    staff = User.all.where.not(role: 'admin')
+    staff = User.where.not(role: 'admin')
     
     render json: staff
   end
@@ -23,22 +23,15 @@ class CurrentUserController < ApplicationController
     
     render json: json = {
       status: 201, 
-      message: `#{user.role} successfully registered!`,
-      user: user,
+      message: "User registered!",
+      user: user.email,
       role: user.role
     }, status: :ok
   end
 
-  def update_email
-    user = User.find_by(id: current_user.id)
-    value = params[:value]
-    user.update!(email: value)
-  end
-
   def update_password
-    user = User.find_by(id: current_user.id)
     value = params[:value]
-    user.update!(email: value)
+    current_user.update!(password: value)
   end
 
   private
