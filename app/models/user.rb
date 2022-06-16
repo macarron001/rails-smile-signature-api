@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :appointments
   has_many :patient_records
   has_many :transactions
+  has_many :dental_records
 
   validates :email, uniqueness: true
   validates :password, presence: true
@@ -45,5 +46,9 @@ class User < ApplicationRecord
   def remove_service(service_name)
     service = Service.find_by(name: service_name)
     service.destroy
+  end
+
+  def create_dental_record(dental_record_params)
+    DentalRecord.create_record(dental_record_params)
   end
 end
