@@ -1,6 +1,8 @@
 class DentalRecord < ApplicationRecord
   belongs_to :user, optional: true
-  belongs_to :patient_record, optional: true
+  belongs_to :patient_record, optional: true  
+
+  alias_attribute :dentist_id, :user_id
 
   validates :first_name, presence: true
   validates :middle_name, presence: true
@@ -14,10 +16,12 @@ class DentalRecord < ApplicationRecord
       :first_name => dental_record_params[:first_name],
       :middle_name => dental_record_params[:middle_name],
       :last_name => dental_record_params[:last_name],
-      :servicesr => dental_record_params[:servicesr],
+      :services => dental_record_params[:services],
       :tooth => dental_record_params[:tooth],
       :branch => dental_record_params[:branch],
-      :remarks => dental_record_params[:remarks]
+      :remarks => dental_record_params[:remarks],
+      :dentist_id => dental_record_params[:dentist_id],
+      :patient_record_id => dental_record_params[:patient_record_id]
     )
   end
 end
