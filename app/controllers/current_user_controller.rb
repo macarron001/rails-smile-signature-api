@@ -31,7 +31,7 @@ class CurrentUserController < ApplicationController
 
   def update_password
     value = params[:value]
-    current_user.update!(password: value)
+    current_user.update(password: value)
   end
 
   private
