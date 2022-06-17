@@ -11,18 +11,26 @@ class TransactionsController < ApplicationController
   def create_transaction
     transaction = current_user.create_transaction(transaction_params, @patient_record)
 
-    if transaction_params[:status] == 'full'
-    render json: json = {
-      status: 201, 
-      message: 'Payment Success!',
-      transaction: transaction[0],
-    }, status: :ok
+    if transaction
+      if transaction_params[:status] == 'full'
+        render json: json = {
+          status: 201, 
+          message: 'Payment Success!',
+          transaction: transaction[0],
+        }, status: :ok
+      else
+        render json: json = {
+          status: 201, 
+          message: 'Payment Success!',
+          transaction: transaction[0],
+          profile: transaction[1]
+        }, status: :ok
+      end
     else
       render json: json = {
-        status: 201, 
-        message: 'Payment Success!',
-        transaction: transaction[0],
-        profile: transaction[1]
+        status: 400,
+        error: 'Transaction not processed',
+        message: 'Patient has outstanding obligation'
       }, status: :ok
     end
   end
