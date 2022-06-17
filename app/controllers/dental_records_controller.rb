@@ -4,35 +4,35 @@ class DentalRecordsController < ApplicationController
   before_action :get_dental_record, except: [:create_record]
 
   def create_record
-    record = @dentist.create_dental_record(dental_record_params)
+    record = current_user.create_dental_record(dental_record_params)
 
     render json: json = {
       status: 201,
-      message: `Record updated!`,
+      message: 'Dental record created!',
       record: record,
     }, status: :ok
   end
 
   def show_record
-    render json: @record
+    render json: @dental_record
   end
 
   def update_record
-    if @record.update(post_params)
+    if @dental_record.update(dental_record_params)
       render json: json = {
         status: 201,
-        message: `Dental record updated!`,
-        record: record,
+        message: 'Dental record updated!',
+        record: @dental_record,
       }, status: :ok
     else
-      render json: @record.errors, status: :unprocessable_entity
+      render json: @dental_record.errors, status: :unprocessable_entity
     end
   end
 
   private
 
   def dental_record_params 
-    params.require(:dental_record).permit(:first_name, :last_name, :middle_name, :services, :tooth, :branch, :remarks)
+    params.require(:dental_record).permit(:first_name, :last_name, :middle_name, :services, :tooth, :branch, :remarks, :dentist_id, :patient_record_id)
   end
 
   def authenticate_dentist!
@@ -43,10 +43,6 @@ class DentalRecordsController < ApplicationController
   end
 
   def get_dental_record
-    @record = DentalRecord.find(params[:id])
-  end
-
-  def get_dentist
-    @dentist = current_user
+    @dental_record = DentalRecord.find(params[:id])
   end
 end
