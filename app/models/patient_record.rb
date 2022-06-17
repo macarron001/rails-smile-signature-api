@@ -26,6 +26,14 @@ class PatientRecord < ApplicationRecord
     )
   end
 
+  def has_obligation?
+    if self.obligation != nil
+      return true
+    else
+      return false
+    end
+  end
+
   def set_obligation(transaction)
     obligation = {}
     obligation[:services] = transaction.services
@@ -38,11 +46,12 @@ class PatientRecord < ApplicationRecord
 
   def update_obligation(transaction)
     obligation = self.obligation
-    if obligation.remaining == transaction.amount
-      obligation = nil
+    remaining = obligation['remaining'].to_i
+    if remaining == transaction.amount
+      self.update!(obligation: nil)
     else
-      remaining = obligation.remaining - transaction.amount
-      obligation.update!(remaining: remaining)
+      remaining_balance = remaining - transaction.amount
+      obligation.update!(remaining: remaining_balance)
     end
   end
 end
