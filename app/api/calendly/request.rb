@@ -3,8 +3,8 @@ module Calendly
     def self.call(http_method, endpoint)
       result = RestClient::Request.execute(
         method: http_method,
-        url: "#{BASE_URL}#{endpoint}",
-        headers: { 'Authorization' => TOKEN.to_s,
+        url: "#{ENV['BASE_URL']}#{endpoint}",
+        headers: { 'Authorization' => ENV['TOKEN'].to_s,
                    'Content-Type' => 'application/json' }
       )
       JSON.parse(result.body)

@@ -5,11 +5,11 @@ module Calendly
     end
 
     def self.show_events
-      response = Request.call('get', "/scheduled_events?organization=#{ORGANIZATION}")
+      response = Request.call('get', "/scheduled_events?organization=#{ENV['ORGANIZATION']}")
     end
 
     def self.show_specific_event(id)
-      response = Request.call('get', "/scheduled_events?organization=#{ORGANIZATION}&id=#{id}")
+      response = Request.call('get', "/scheduled_events?organization=#{ENV['ORGANIZATION']}&id=#{id}")
     end
 
     def self.show_specific_guest_invitees(event_id)
