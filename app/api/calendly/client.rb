@@ -1,7 +1,5 @@
 module Calendly
   class Client
-    ORGANIZATION = 'https://api.calendly.com/organizations/2a7498fb-bf14-40b4-971a-16dd78de8285'
-
     def self.show_me
       response = Request.call('get', '/users/me')
     end
