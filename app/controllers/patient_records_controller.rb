@@ -1,10 +1,16 @@
 class PatientRecordsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :create]
   before_action :get_user
   before_action :get_patient_record, only: [:update_record, :show_record]
 
+  def index
+    records = PatientRecord.all
+    render json: records
+  end
+
   def create
-    record = @user.create_record(patient_record_params)
+    # record = @user.create_record(patient_record_params)
+    record = PatientRecord.create(patient_record_params)
 
     render json: json = {
       status: 201, 
@@ -30,7 +36,7 @@ class PatientRecordsController < ApplicationController
   private
 
   def patient_record_params 
-    params.require(:patient_record).permit(:first_name, :last_name, :middle_name, :gender, :date_of_birth, :mobile, :email, :street_address, :barangay, :city)
+    params.require(:patient_record).permit(:full_name, :gender, :date_of_birth, :mobile, :email, :address)
   end
 
   def get_patient_record
