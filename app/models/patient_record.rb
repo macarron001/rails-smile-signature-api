@@ -3,9 +3,7 @@ class PatientRecord < ApplicationRecord
   has_many :dental_records
   has_many :transactions
 
-  validates :first_name, presence: true
-  validates :middle_name, presence: true
-  validates :last_name, presence: true
+  validates :full_name, presence: true
   validates :gender, presence: true
   validates :date_of_birth, presence: true
   validates :mobile, presence: true
@@ -13,16 +11,12 @@ class PatientRecord < ApplicationRecord
 
   def self.create_record(record_params)
     PatientRecord.create!(
-      :first_name => record_params[:first_name],
-      :middle_name => record_params[:middle_name],
-      :last_name => record_params[:last_name],
+      :full_name => record_params[:full_name],
       :gender => record_params[:gender],
       :date_of_birth => record_params[:date_of_birth],
       :mobile => record_params[:mobile],
       :email => record_params[:email],
-      :street_address => record_params[:street_address],
-      :barangay => record_params[:barangay],
-      :city => record_params[:city]
+      :address => record_params[:address]
     )
   end
 
