@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   patch '/appointments/:id/update', to: 'appointments#update'
   delete '/appointments/:id/cancel/', to: 'appointments#destroy'
   
+  get '/patient_records', to: 'patient_records#index'
   post '/patient_records/create', to: 'patient_records#create'
   get '/patient_records/:id', to: 'patient_records#show_record'
   patch '/patient_records/:id/update', to: 'patient_records#update_record'
@@ -19,8 +20,10 @@ Rails.application.routes.draw do
   get '/profile', to: 'profiles#show_profile'
   patch '/profiles/update', to: 'profiles#update_profile'
 
+  
   post '/patient_records/:id/transactions/create', to: 'transactions#create_transaction'
   get '/patient_records/:id/transactions', to: 'transactions#patient_transactions'
+
   get '/transactions/:id', to: 'transactions#show_transaction'
   get '/transactions', to: 'transactions#index'
 
@@ -30,6 +33,7 @@ Rails.application.routes.draw do
   patch '/services/:id', to: 'services#update_service'
   delete '/services/:id', to: 'services#remove_service'
 
+  get '/dental_records', to: 'dental_record#index'
   post '/dental_records/create', to: 'dental_records#create_record'
   get '/dental_records/:id', to: 'dental_records#show_record'
   patch '/dental_records/:id', to: 'dental_records#update_record'
