@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_16_164455) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_25_085442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,9 +30,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_16_164455) do
   end
 
   create_table "dental_records", force: :cascade do |t|
-    t.string "first_name", null: false
-    t.string "middle_name", null: false
-    t.string "last_name", null: false
     t.json "services"
     t.json "tooth"
     t.string "branch"
@@ -41,24 +38,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_16_164455) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "full_name", null: false
     t.index ["patient_record_id"], name: "index_dental_records_on_patient_record_id"
     t.index ["user_id"], name: "index_dental_records_on_user_id"
   end
 
   create_table "patient_records", force: :cascade do |t|
-    t.string "first_name", null: false
-    t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "middle_name"
     t.string "gender"
     t.string "date_of_birth"
     t.string "mobile"
     t.string "email"
-    t.string "street_address"
-    t.string "barangay"
-    t.string "city"
     t.json "obligation"
+    t.string "full_name", null: false
+    t.string "address", null: false
   end
 
   create_table "profiles", force: :cascade do |t|
