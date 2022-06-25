@@ -1,10 +1,16 @@
 class DentalRecordsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :create_record]
   before_action :authenticate_dentist!
-  before_action :get_dental_record, except: [:create_record]
+  before_action :get_dental_record, except: [:index, :create_record]
+
+  def index
+    records = DentalRecord.all
+    render json: records
+  end
 
   def create_record
-    record = current_user.create_dental_record(dental_record_params)
+    # record = current_user.create_dental_record(dental_record_params)
+    record = DentalRecord.create(dental_record_params)
 
     render json: json = {
       status: 201,
@@ -32,7 +38,7 @@ class DentalRecordsController < ApplicationController
   private
 
   def dental_record_params 
-    params.require(:dental_record).permit(:first_name, :last_name, :middle_name, :services, :tooth, :branch, :remarks, :dentist_id, :patient_record_id)
+    params.require(:dental_record).permit(:full_name, :services, :tooth, :branch, :remarks, :dentist_id, :patient_record_id)
   end
 
   def authenticate_dentist!
