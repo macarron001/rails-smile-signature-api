@@ -4,8 +4,7 @@ class Transaction < ApplicationRecord
   validates :services, presence: true
   validates :status, presence: true, :inclusion => { :in => ['full', 'partial', 'follow-up']}
   validates :branch, presence: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :full_name, presence: true
   validates :amount, presence: true, numericality: {greater_than: 0}
   validates :remaining, presence: true
   validates :payment_type, presence: true, :inclusion => { :in => ['cash', 'online', 'card']}
@@ -19,8 +18,7 @@ class Transaction < ApplicationRecord
     end
 
     transaction = Transaction.create!(
-      :first_name => patient_record.first_name,
-      :last_name => patient_record.last_name,
+      :full_name => patient_record.full_name,
       :services => transaction_params[:services],
       :status => status,
       :branch => transaction_params[:branch],

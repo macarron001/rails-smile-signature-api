@@ -4,18 +4,14 @@ class DentalRecord < ApplicationRecord
 
   alias_attribute :dentist_id, :user_id
 
-  validates :first_name, presence: true
-  validates :middle_name, presence: true
-  validates :last_name, presence: true
+  validates :full_name, presence: true
   validates :services, presence: true
   validates :tooth, presence: true
   validates :branch, presence: true
 
   def self.create_record(dental_record_params)
     record = DentalRecord.create!(
-      :first_name => dental_record_params[:first_name],
-      :middle_name => dental_record_params[:middle_name],
-      :last_name => dental_record_params[:last_name],
+      :full_name => dental_record_params[:full_name],
       :services => dental_record_params[:services],
       :tooth => dental_record_params[:tooth],
       :branch => dental_record_params[:branch],
