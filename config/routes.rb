@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   get '/current_user', to: 'current_user#index'
   
-  get '/current_user/staff', to: 'current_user#staff'
-  get '/current_user/dentist', to: 'current_user#dentist'
+  get '/staff', to: 'current_user#staff_list'
+  get '/dentists', to: 'current_user#dentists'
   post '/current_user/create', to: 'current_user#create'
   patch '/current_user/update_user_password/', to: 'current_user#update_password'
   
@@ -17,12 +17,12 @@ Rails.application.routes.draw do
   patch '/patient_records/:id/update', to: 'patient_records#update_record'
   
   post '/profiles/create', to: 'profiles#create_profile'
-  get '/profile', to: 'profiles#show_profile'
+  get '/profile/:id', to: 'profiles#show_profile'
   patch '/profiles/update', to: 'profiles#update_profile'
 
   
-  post '/patient_records/:id/transactions/create', to: 'transactions#create_transaction'
-  get '/patient_records/:id/transactions', to: 'transactions#patient_transactions'
+  post '/patient_record/:id/transactions/create', to: 'transactions#create_transaction'
+  get '/patient_record/:id/transactions', to: 'transactions#patient_transactions'
 
   get '/transactions/:id', to: 'transactions#show_transaction'
   get '/transactions', to: 'transactions#index'
@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   patch '/services/:id', to: 'services#update_service'
   delete '/services/:id', to: 'services#remove_service'
 
-  get '/dental_records', to: 'dental_record#index'
+  get '/dental_records', to: 'dental_records#index'
   post '/dental_records/create', to: 'dental_records#create_record'
   get '/dental_records/:id', to: 'dental_records#show_record'
   patch '/dental_records/:id', to: 'dental_records#update_record'
