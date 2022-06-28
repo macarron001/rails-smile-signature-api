@@ -1,18 +1,18 @@
 class CurrentUserController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authenticate_admin, except: [:index, :update_email, :update_password]
+  # before_action :authenticate_user!
+  # before_action :authenticate_admin, except: [:index, :update_email, :update_password]
 
   def index
     render json: current_user, status: :ok
   end
 
-  def staff
-    staff = User.where.not(role: 'admin')
+  def staff_list
+    list = User.where.not(role: 'admin')
     
-    render json: staff
+    render json: list
   end
   
-  def dentist
+  def dentists
     dentist = User.all.where(role: 'dentist')
 
     render json: dentist

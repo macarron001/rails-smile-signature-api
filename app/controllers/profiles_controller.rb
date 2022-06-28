@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :get_user
+  # before_action :authenticate_user!
+  # before_action :get_user
 
   def create_profile
     profile = @user.create_profile(profile_params)
@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
   end
 
   def show_profile
-    profile = @user.profile
+    profile = Profile.find_by(user_id: params[:id])
 
     render json: json = {
       status: 201, 

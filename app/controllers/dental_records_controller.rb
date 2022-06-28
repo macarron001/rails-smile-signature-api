@@ -1,6 +1,6 @@
 class DentalRecordsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :create_record]
-  before_action :authenticate_dentist!
+  # before_action :authenticate_dentist!
   before_action :get_dental_record, except: [:index, :create_record]
 
   def index
