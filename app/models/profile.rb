@@ -9,9 +9,9 @@ class Profile < ApplicationRecord
   validates :mobile, presence: true
   validates :address, presence: true
 
-  def self.create(profile_params, id)
+  def self.create(profile_params)
     Profile.create!(
-      :user_id => id,
+      :user_id => profile_params[:id],
       :first_name => profile_params[:first_name],
       :middle_name => profile_params[:middle_name],
       :last_name => profile_params[:last_name],
