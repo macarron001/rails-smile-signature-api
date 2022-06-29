@@ -213,6 +213,7 @@ GEM
     rspec-support (3.11.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
+    strftime-rails (0.9.2)
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.3.0)
@@ -250,6 +251,7 @@ DEPENDENCIES
   rest-client
   rspec-rails (~> 6.0.0.rc1)
   shoulda-matchers (~> 5.1)
+  strftime-rails (~> 0.9.2)
   tzinfo-data
 
 RUBY VERSION
