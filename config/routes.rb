@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get '/patient_records/:id', to: 'patient_records#show_record'
   patch '/patient_records/:id/update', to: 'patient_records#update_record'
   
-  post '/profiles/create', to: 'profiles#create_profile'
+  post '/profile/create', to: 'profiles#create_profile'
   get '/profile/:id', to: 'profiles#show_profile'
   patch '/profiles/update', to: 'profiles#update_profile'
 
@@ -37,6 +37,9 @@ Rails.application.routes.draw do
   post '/dental_records/create', to: 'dental_records#create_record'
   get '/dental_records/:id', to: 'dental_records#show_record'
   patch '/dental_records/:id', to: 'dental_records#update_record'
+
+  get '/appointments', to: 'appointments#appointments'
+  get '/appointments_today', to: 'appointments#appointments_today'
 
 
   devise_for :users, path: '', path_names: {
