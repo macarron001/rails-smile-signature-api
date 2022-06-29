@@ -12,7 +12,7 @@ module Calendly
       response = Request.call('get', "/scheduled_events?organization=#{ENV['ORGANIZATION']}&id=#{id}")
     end
 
-    def self.show_specific_guest_invitees(event_id)
+    def self.show_participants(event_id)
       response = Request.call('get', "/scheduled_events/#{event_id}/invitees/")
     end
 
