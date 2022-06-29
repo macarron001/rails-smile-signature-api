@@ -3,7 +3,8 @@ class ProfilesController < ApplicationController
   # before_action :get_user
 
   def create_profile
-    profile = @user.create_profile(profile_params)
+    # profile = @user.create_profile(profile_params)
+    profile = Profile.create(profile_params)
 
     render json: json = {
       status: 201, 
@@ -39,7 +40,7 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params 
-    params.require(:profile).permit(:first_name, :last_name, :middle_name, :date_of_birth, :gender, :mobile, :address)
+    params.require(:profile).permit(:first_name, :last_name, :middle_name, :date_of_birth, :gender, :mobile, :address, :id)
   end
 
   def get_user
