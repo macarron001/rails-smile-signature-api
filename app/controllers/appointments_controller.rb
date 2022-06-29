@@ -1,7 +1,7 @@
 class AppointmentsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :get_user
-  before_action :get_appointment, except: [:create]
+  # before_action :authenticate_user!
+  # before_action :get_user
+  # before_action :get_appointment, except: [:create, :events]
 
   def create
     appointment = @user.set_appointment(appointment_params)
@@ -42,6 +42,17 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def appointments
+    appointments = Appointment.get_appointments
+    
+    render json = appointments
+  end
+
+  def appointments_today
+    appointments = Appointment.appointments_today
+
+    render json = appointments
+  end
 
   private
 
