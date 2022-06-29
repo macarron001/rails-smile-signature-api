@@ -49,7 +49,6 @@ class Appointment < ApplicationRecord
       event[:time] = Time.parse(data['start_time'].in_time_zone('Asia/Singapore').to_s).strftime('%H:%M %p')
       event[:date] = Date.parse(data['start_time'])
       event[:event_uri] = data['uri'].split('/').last
-      event[:schedule] = data['start_time'].in_time_zone('Asia/Singapore')
 
       events << event
     end
@@ -90,7 +89,6 @@ class Appointment < ApplicationRecord
 
     events.each_with_index do |event, i|
       appointment = {}
-      appointment['schedule'] = event[:schedule]
       appointment['event'] = event[:name]
       appointment['time'] = event[:time]
       appointment['date'] = event[:date]
@@ -116,7 +114,7 @@ class Appointment < ApplicationRecord
 
     today = []
     appointments.each do |appointment|
-      if appointment['schedule'].to_date == Date.today
+      if appointment['date'].to_date == Date.today
         today << appointment
       end
     end
