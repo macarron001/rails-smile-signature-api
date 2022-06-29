@@ -38,6 +38,92 @@ class Appointment < ApplicationRecord
     return true if appointments.blank?
   end
 
+  def self.get_events
+    data = Calendly::Client.show_events
+    filtered_data = data[:data]['collection']
+    events = []
+
+    filtered_data.each do |data|
+      event = {}
+      event[:name] = data['name']
+      event[:time] = Time.parse(data['start_time'].in_time_zone('Asia/Singapore').to_s).strftime('%H:%M %p')
+      event[:date] = Date.parse(data['start_time'])
+      event[:event_uri] = data['uri'].split('/').last
+      event[:schedule] = data['start_time'].in_time_zone('Asia/Singapore')
+
+      events << event
+    end
+
+    return events
+  end
+
+  def self.get_participants
+    events = Appointment.get_events
+    participants = []
+
+    events.each do |event|
+      invitees = []
+      uri = event[:event_uri]
+
+      response = Calendly::Client.show_participants(uri)
+      filtered_data = response[:data]['collection']
+
+      filtered_data.each do |data|
+        invitee = {}
+        invitee[:name] = data['name']
+        invitee[:email] = data['email']
+        invitee[:participant_uri] = data['uri'].split('/').last
+
+        invitees << invitee
+      end
+
+      participants << invitees
+    end
+    return participants
+  end
+
+  def self.get_appointments
+    events = Appointment.get_events
+    participants = Appointment.get_participants
+
+    appointments = []
+
+    events.each_with_index do |event, i|
+      appointment = {}
+      appointment['schedule'] = event[:schedule]
+      appointment['event'] = event[:name]
+      appointment['time'] = event[:time]
+      appointment['date'] = event[:date]
+      appointment['participants'] = []
+
+      participants[i].each do |participant|
+        patient = {}
+        patient['name'] = participant[:name]
+        patient['email'] = participant[:email]
+
+        appointment['participants'] << patient
+      end
+
+      appointments << appointment
+    end
+
+    return appointments
+  end
+
+  def self.appointments_today
+    now = Time.now
+    appointments = Appointment.get_appointments
+
+    today = []
+    appointments.each do |appointment|
+      if appointment['schedule'].to_date == Date.today
+        today << appointment
+      end
+    end
+    
+    return today
+  end
+
   def dentist
     User.find(dentist_id)
   end
