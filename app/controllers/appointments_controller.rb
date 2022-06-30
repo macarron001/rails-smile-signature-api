@@ -45,13 +45,19 @@ class AppointmentsController < ApplicationController
   def appointments
     appointments = Appointment.get_appointments
     
-    render json = appointments
+    render json: appointments
   end
 
   def appointments_today
     appointments = Appointment.appointments_today
 
-    render json = appointments
+    render json: appointments
+  end
+
+  def calendar_events
+    events = Appointment.calendar_events
+
+    render json: events
   end
 
   private
