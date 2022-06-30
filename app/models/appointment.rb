@@ -46,8 +46,10 @@ class Appointment < ApplicationRecord
     filtered_data.each do |data|
       event = {}
       event[:name] = data['name']
-      event[:time] = Time.parse(data['start_time'].in_time_zone('Asia/Singapore').to_s).strftime('%H:%M %p')
-      event[:date] = Date.parse(data['start_time'])
+      event[:start] = Time.parse(data['start_time'].in_time_zone('Asia/Singapore').to_s).strftime('%H:%M %p')
+      event[:end] = Time.parse(data['end_time'].in_time_zone('Asia/Singapore').to_s).strftime('%H:%M %p')
+      event[:start_date] = DateTime.parse(data['start_time']).in_time_zone('Asia/Singapore')
+      event[:end_date] = DateTime.parse(data['end_time']).in_time_zone('Asia/Singapore')
       event[:event_uri] = data['uri'].split('/').last
 
       events << event
@@ -90,8 +92,10 @@ class Appointment < ApplicationRecord
     events.each_with_index do |event, i|
       appointment = {}
       appointment['event'] = event[:name]
-      appointment['time'] = event[:time]
-      appointment['date'] = event[:date]
+      appointment['start'] = event[:start]
+      appointment['end'] = event[:end]
+      appointment['start_date'] = event[:start_date]
+      appointment['end_date'] = event[:end_date]
       appointment['participants'] = []
 
       participants[i].each do |participant|
@@ -120,6 +124,22 @@ class Appointment < ApplicationRecord
     end
     
     return today
+  end
+
+  def self.calendar_events
+    appointments = Appointment.get_appointments
+    events = []
+
+    appointments.each do |appointment|
+      event = {}
+      event['title'] = appointment['start'] + ' Appointment'
+      event['start'] = appointment['start_date']
+      event['end'] = appointment['end_date']
+      
+      events << event
+    end
+
+    return events
   end
 
   def dentist
