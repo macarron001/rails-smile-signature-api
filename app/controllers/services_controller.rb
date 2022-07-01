@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authenticate_admin, except: [:available_services, :service_details]
-  before_action :set_service, only: [:update_service, :remove_service]
+  # before_action :authenticate_user!
+  # before_action :authenticate_admin, except: [:available_services, :service_details]
+  # before_action :set_service, only: [:update_service, :remove_service]
 
   def create_service
     service = Service.create!(service_params)
