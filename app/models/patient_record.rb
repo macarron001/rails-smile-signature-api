@@ -75,4 +75,24 @@ class PatientRecord < ApplicationRecord
 
     return report
   end
+
+  def self.get_obligations
+    records = PatientRecord.where.not(obligation: nil)
+    obligations = []
+
+    records.each do |record|
+      obligation = {}
+      obligation['remaining'] = record['obligation']['remaining']
+      obligation['services'] = record['obligation']['services']
+      obligation['branch'] = record['obligation']['branch']
+      obligation['full_name'] = record['full_name']
+      obligation['address'] = record['address']
+      obligation['mobile'] = record['mobile']
+      obligation['id'] = record['id']
+
+      obligations << obligation
+    end
+
+    return obligations
+  end
 end
