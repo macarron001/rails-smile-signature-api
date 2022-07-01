@@ -135,6 +135,7 @@ class Appointment < ApplicationRecord
       event['title'] = appointment['start'] + ' Appointment'
       event['start'] = appointment['start_date']
       event['end'] = appointment['end_date']
+      event['participants'] = appointment['participants']
       
       events << event
     end
