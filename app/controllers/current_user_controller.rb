@@ -25,7 +25,8 @@ class CurrentUserController < ApplicationController
       status: 201, 
       message: "User registered!",
       user: user.email,
-      role: user.role
+      role: user.role,
+      profile: user.has_profile
     }, status: :ok
   end
 
@@ -34,10 +35,10 @@ class CurrentUserController < ApplicationController
     current_user.update(password: value)
   end
 
-  def delete
-    value = params[:value]
-    user = User.find_by(email: value)
-    user.delete
+  def delete_user
+    id = params[:id].to_i
+    user = User.find(id)
+    user.destroy
 
     render json: json = {
       status: 200, 
