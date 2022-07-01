@@ -10,18 +10,21 @@ User.create!([{
   password: "password",
   role: "dentist",
   gender: 'male',
+  has_profile: true
 },
 {
   email: "ashleymorris@hotmail.com",
   password: "password",
   role: "dentist",
   gender: 'female',
+  has_profile: true
 },
 {
   email: "carlabrown@rocketmail.com",
   password: "password",
   role: "dentist",
   gender: 'female',
+  has_profile: true
 },
 {
   email: "kreugerpaul@gmail.com",
@@ -34,6 +37,7 @@ User.create!([{
   password: "password",
   role: "dentist",
   gender: 'female',
+  has_profile: true
 }
 ])
 
@@ -67,16 +71,16 @@ Profile.create!([{
   mobile: '09173247988',
   address: 'New Boulevard, Quezon City, Manila'
 },
-{
-  user_id: 5,
-  first_name: 'Kreuger',
-  middle_name: 'D',
-  last_name: 'Paul',
-  date_of_birth: Date.parse("02/02/1999"),
-  gender: 'male',
-  mobile: '09194746282',
-  address: 'Talon Singko, Las Pinas, Manila'
-},
+# {
+#   user_id: 5,
+#   first_name: 'Kreuger',
+#   middle_name: 'D',
+#   last_name: 'Paul',
+#   date_of_birth: Date.parse("02/02/1999"),
+#   gender: 'male',
+#   mobile: '09194746282',
+#   address: 'Talon Singko, Las Pinas, Manila'
+# },
 {
   user_id: 6,
   first_name: 'Susan',
