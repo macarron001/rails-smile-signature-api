@@ -112,7 +112,6 @@ class Appointment < ApplicationRecord
   end
 
   def self.appointments_today
-    now = Time.now
     appointments = Appointment.get_appointments
 
     today = []
@@ -123,6 +122,19 @@ class Appointment < ApplicationRecord
     end
     
     return today
+  end
+
+  def self.appointments_weekly
+    appointments = Appointment.get_appointments
+
+    this_week = []
+    appointments.each do |appointment|
+      if appointment['start_date'].to_date >= Date.today.at_beginning_of_week
+        this_week << appointment
+      end
+    end
+
+    return this_week
   end
 
   def self.calendar_events

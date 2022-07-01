@@ -54,6 +54,12 @@ class AppointmentsController < ApplicationController
     render json: appointments
   end
 
+  def appointments_weekly
+    appointments = Appointment.appointments_weekly
+
+    render json: appointments
+  end
+
   def calendar_events
     events = Appointment.calendar_events
 

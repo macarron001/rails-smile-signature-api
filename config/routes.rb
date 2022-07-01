@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   get '/appointments', to: 'appointments#appointments'
   get '/appointments_today', to: 'appointments#appointments_today'
+  get '/appointments_weekly', to: 'appointments#appointments_weekly'
   get '/calendar_events', to: 'appointments#calendar_events'
 
   #admin
