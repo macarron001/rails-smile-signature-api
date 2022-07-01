@@ -44,6 +44,8 @@ Rails.application.routes.draw do
 
   #admin
   get '/report_patients', to: 'patient_records#patient_report'
+  get '/report_appointments', to: 'appointments#appointment_report'
+  get '/report_transactions', to: 'transactions#transaction_report'
 
 
   devise_for :users, path: '', path_names: {
