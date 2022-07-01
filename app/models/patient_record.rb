@@ -48,4 +48,32 @@ class PatientRecord < ApplicationRecord
       obligation.update!(remaining: remaining_balance)
     end
   end
+
+  def self.get_patients
+    appointments = Appointment.get_appointments
+    participants = []
+    appointments.each do |appointment|
+      appointment['participants'].each do |participant|
+        participants << participant
+      end
+    end
+    return participants
+  end
+
+  def self.new_patients
+    patients = PatientRecord.where(created_at: Time.now.beginning_of_month..(Time.now.end_of_month))
+
+    return patients
+  end
+
+  def self.patient_report
+    total_patients = PatientRecord.all
+    new_patients = PatientRecord.new_patients
+
+    report = {}
+    report['total'] = total_patients.count
+    report['new'] = new_patients.count
+
+    return report
+  end
 end
