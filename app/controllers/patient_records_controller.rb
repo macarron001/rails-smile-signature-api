@@ -40,6 +40,12 @@ class PatientRecordsController < ApplicationController
     render json: report
   end
 
+  def obligations
+    records = PatientRecord.where.not(obligation: nil)
+
+    render json: records
+  end
+
   private
 
   def patient_record_params 

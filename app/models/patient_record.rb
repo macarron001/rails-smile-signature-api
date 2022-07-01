@@ -31,7 +31,6 @@ class PatientRecord < ApplicationRecord
   def set_obligation(transaction)
     obligation = {}
     obligation[:services] = transaction.services
-    obligation[:status] = transaction.status
     obligation[:branch] = transaction.branch
     obligation[:remaining] = transaction.remaining
 

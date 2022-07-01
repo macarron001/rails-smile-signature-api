@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get '/appointments_weekly', to: 'appointments#appointments_weekly'
   get '/calendar_events', to: 'appointments#calendar_events'
 
+  get '/obligations', to: 'patient_records#obligations'
+
   #admin
   get '/report_patients', to: 'patient_records#patient_report'
   get '/report_appointments', to: 'appointments#appointment_report'

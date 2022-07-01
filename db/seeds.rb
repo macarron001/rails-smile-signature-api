@@ -103,7 +103,12 @@ PatientRecord.create!([{
   date_of_birth: Date.parse("16/07/1996"),
   mobile: '09147851213',
   email: 'will@rocks.com',
-  address: 'Boardwalk, China Town, Manila'
+  address: 'Boardwalk, China Town, Manila',
+  obligation: {
+    services: ['teeth-whitening'],
+    branch: 'marcos-alvarez',
+    remaining: 800
+  }
 },
 {
   full_name: 'Catherine Bloom',
@@ -111,7 +116,12 @@ PatientRecord.create!([{
   date_of_birth: Date.parse("09/04/1992"),
   mobile: '09175524816',
   email: 'bloom@gmail.com',
-  address: 'Kings Extension, Quezon City, Manila'
+  address: 'Kings Extension, Quezon City, Manila',
+  obligation: {
+    services: ['teeth-filling'],
+    branch: 'marcos-alvarez',
+    remaining: 500
+  }
 },
 {
   full_name: 'Warner Brother',
@@ -127,7 +137,12 @@ PatientRecord.create!([{
   date_of_birth: Date.parse("02/01/1987"),
   mobile: '09159407117',
   email: 'kateholmes@rocketmail.com',
-  address: 'Bluementrit, Ayala Avenue, Manila'
+  address: 'Bluementrit, Ayala Avenue, Manila',
+  obligation: {
+    services: ['molar x-ray'],
+    branch: 'marcos-alvarez',
+    remaining: 6000
+  }
 },
 {
   full_name: 'Dana Richter',
