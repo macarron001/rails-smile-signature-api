@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   # before_action :authenticate_user!
-  # before_action :get_patient_record, except: [:index, :show_transaction]
+  before_action :get_patient_record, except: [:index, :show_transaction]
   # before_action :get_transaction, only: [:show_transaction]
 
   def index
