@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   get '/appointments_today', to: 'appointments#appointments_today'
   get '/calendar_events', to: 'appointments#calendar_events'
 
+  #admin
+  get '/report_patients', to: 'patient_records#patient_report'
+
 
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
