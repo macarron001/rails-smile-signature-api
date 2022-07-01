@@ -39,8 +39,7 @@ class Appointment < ApplicationRecord
   end
 
   def self.get_events
-    data = Calendly::Client.show_events
-    filtered_data = data[:data]['collection']
+    filtered_data = Appointment.calendly()
     events = []
 
     filtered_data.each do |data|
@@ -118,7 +117,7 @@ class Appointment < ApplicationRecord
 
     today = []
     appointments.each do |appointment|
-      if appointment['date'].to_date == Date.today
+      if appointment['start_date'].to_date == Date.today
         today << appointment
       end
     end
@@ -141,6 +140,31 @@ class Appointment < ApplicationRecord
     end
 
     return events
+  end
+
+  def self.calendly
+    data = Calendly::Client.show_events
+    filtered_data = data[:data]['collection']
+
+    return filtered_data
+  end
+
+  def self.appointment_report
+    total_appointments = Appointment.get_appointments
+    appointments_this_month = []
+    report = {}
+    
+    total_appointments.each do |appointment|
+      if appointment['start_date'].to_date.strftime("%m") == Date.today.strftime("%m")
+        appointments_this_month << appointment
+      end
+    end
+
+    report['total'] = total_appointments.count
+    report['new'] = appointments_this_month.count
+    report['appointments'] = appointments_this_month
+
+    return report
   end
 
   def dentist

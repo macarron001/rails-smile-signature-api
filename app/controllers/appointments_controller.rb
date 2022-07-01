@@ -60,6 +60,12 @@ class AppointmentsController < ApplicationController
     render json: events
   end
 
+  def appointment_report
+    report = Appointment.appointment_report
+
+    render json: report
+  end
+
   private
 
   def appointment_params 
