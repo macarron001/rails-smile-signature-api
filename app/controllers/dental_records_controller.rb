@@ -1,7 +1,7 @@
 class DentalRecordsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :create_record]
+  # before_action :authenticate_user!, except: [:index, :create_record]
   # before_action :authenticate_dentist!
-  before_action :get_dental_record, except: [:index, :create_record]
+  # before_action :get_dental_record, except: [:index, :create_record]
 
   def index
     records = DentalRecord.all
@@ -19,8 +19,11 @@ class DentalRecordsController < ApplicationController
     }, status: :ok
   end
 
-  def show_record
-    render json: @dental_record
+  def show_records
+    id = params[:id]
+    records = DentalRecord.where(patient_record_id: id)
+    
+    render json: records
   end
 
   def update_record
