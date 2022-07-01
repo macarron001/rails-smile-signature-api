@@ -4,12 +4,22 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:update_service, :remove_service]
 
   def create_service
-    service = current_user.create_service(service_params)
+    service = Service.create!(service_params)
 
     render json: json = {
       status: 201, 
       message: 'Service added!',
       service: service,
+    }, status: :ok
+  end
+
+  def delete
+    service = Service(params[:id])
+    service.destroy
+
+    render json: json = {
+      status: 201, 
+      message: 'Service removed!'
     }, status: :ok
   end
 
@@ -49,7 +59,7 @@ class ServicesController < ApplicationController
   private
   
   def service_params 
-    params.require(:service).permit(:name, :price, :branch)
+    params.require(:service).permit(:name)
   end
 
   def set_service
