@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/dentists', to: 'current_user#dentists'
   post '/current_user/create', to: 'current_user#create'
   patch '/current_user/update_user_password/', to: 'current_user#update_password'
+  post '/user/delete', to: 'current_user#delete'
   
   post '/appointments/create/', to: 'appointments#create'
   get '/appointments/:id', to: 'appointments#show'
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
   get '/transactions', to: 'transactions#index'
 
   post '/services/create', to: 'services#create_service'
+  post '/services/delete', to: 'services#delete'
   get '/services', to: 'services#index'
   get '/service', to: 'services#service_details'
   patch '/services/:id', to: 'services#update_service'
