@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/dentists', to: 'current_user#dentists'
   post '/current_user/create', to: 'current_user#create'
   patch '/current_user/update_user_password/', to: 'current_user#update_password'
-  post '/user/delete', to: 'current_user#delete'
+  post '/user/delete', to: 'current_user#delete_user'
   
   post '/appointments/create/', to: 'appointments#create'
   get '/appointments/:id', to: 'appointments#show'
@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   get '/dental_records', to: 'dental_records#index'
   post '/dental_records/create', to: 'dental_records#create_record'
-  get '/dental_records/:id', to: 'dental_records#show_record'
+  get '/dental_records/:id', to: 'dental_records#show_records'
   patch '/dental_records/:id', to: 'dental_records#update_record'
 
   get '/appointments', to: 'appointments#appointments'
