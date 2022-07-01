@@ -57,4 +57,20 @@ class Transaction < ApplicationRecord
   def is_follow_up?(status, transaction)
     patient_record.update_obligation(transaction) if status == 'follow-up'
   end
+
+  def self.transaction_report
+    transactions = Transaction.where(created_at: Time.now.beginning_of_month..(Time.now.end_of_month))
+    total_amount = 0
+    report ={}
+
+
+    transactions.each do |transaction|
+      total_amount += transaction['amount'].to_i
+    end
+
+    report['monthly_transactions'] = transactions.count
+    report['monthly_sales'] = total_amount.to_fs
+
+    return report
+  end
 end
