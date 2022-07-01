@@ -5,11 +5,17 @@ class ProfilesController < ApplicationController
   def create_profile
     # profile = @user.create_profile(profile_params)
     profile = Profile.create(profile_params)
+    if profile.save
+      id = profile_params['id']
+      user = User.find(id)
+      user.update(has_profile: true)
+    end
 
     render json: json = {
       status: 201, 
       message: 'Profile created',
       profile: profile,
+      has_profile: user.has_profile
     }, status: :ok
   end
 
