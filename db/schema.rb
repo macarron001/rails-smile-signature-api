@@ -103,7 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_01_060716) do
     t.string "role"
     t.string "email", null: false
     t.string "gender"
-    t.boolean "profile", default: false
+    t.boolean "has_profile", default: false
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
