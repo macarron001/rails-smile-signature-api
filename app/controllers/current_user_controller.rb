@@ -34,6 +34,17 @@ class CurrentUserController < ApplicationController
     current_user.update(password: value)
   end
 
+  def delete
+    value = params[:value]
+    user = User.find_by(email: value)
+    user.delete
+
+    render json: json = {
+      status: 200, 
+      message: "User removed!"
+    }, status: :ok
+  end
+
   private
 
   def user_params 
