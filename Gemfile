@@ -47,11 +47,11 @@ gem 'strftime-rails', '~> 0.9.2'
 gem 'rest-client'
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem 'shoulda-matchers', '~> 5.1'
-end
+# group :development, :test do
+#   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+#   gem 'shoulda-matchers', '~> 5.1'
+#   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+# end
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
